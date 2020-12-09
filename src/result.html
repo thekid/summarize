@@ -18,15 +18,19 @@
     <form method="POST">
       <textarea name="text" cols="100" rows="20">{{text}}</textarea>
       <br/>
+      Use:
       <select name="language">
         <option value="german">German</option>
         <option value="english">English</option>
       </select>
+      In:
+      <input type="number" name="sentences" size="2" value="{{sentences}}" min="1">
+      sentences.
       <input type="submit" name="submit" value="Summarize">
     </form>
 
     <hr/>
-
+    <h2>Summarized in {{sentences}} sentences</h2>
     <p style="white-space: pre-wrap">{{result}}</p>
   </body>
 </html>
