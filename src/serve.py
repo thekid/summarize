@@ -42,7 +42,7 @@ if __name__ == '__main__':
   path = os.path.dirname(sys.argv[0])
   for file in os.listdir(path):
     if file.endswith('.html'):
-      with open(os.path.join(path, file), 'r') as f:
+      with open(os.path.join(path, file), 'r', encoding='utf8') as f:
         handler.templates[os.path.basename(file)[0 : -5]] = f.read()
 
   try:
