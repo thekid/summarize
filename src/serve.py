@@ -12,14 +12,13 @@ class Summarize(BaseHTTPRequestHandler):
     def replace(match):
       return html.escape(str(context[match.group(1)]))
 
-    self.wfile.write(re.sub('\{\{([^}]+)\}\}', replace, self.templates[template]).encode())
-
-  def do_GET(self):
     self.send_response(200)
     self.send_header('Content-type', 'text/html')
     self.send_header('Connection', 'close')
     self.end_headers()
+    self.wfile.write(re.sub('\{\{([^}]+)\}\}', replace, self.templates[template]).encode())
 
+  def do_GET(self):
     self.output('form', {})
 
   def do_POST(self):
@@ -27,11 +26,6 @@ class Summarize(BaseHTTPRequestHandler):
     text = form.getvalue('text')
     sentences = form.getvalue('sentences')
     result = summarize(text, sentence_count=int(sentences), language=form.getvalue('language'))
-
-    self.send_response(200)
-    self.send_header('Content-type', 'text/html')
-    self.send_header('Connection', 'close')
-    self.end_headers()
 
     self.output('result', {'text': text, 'result': result, 'sentences': sentences})
 
