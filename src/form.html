@@ -4,37 +4,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Konzentration</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
-    <style type="text/css">
-      html, select, input {
-        font-weight: 300;
-        font-family: "Roboto", Helvetica, Arial, sans-serif;
-        line-height: 1.4;
-      }
-      footer {
-        text-align: center;
-        font-size: 80%;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
   </head>
-  <body>
-    <h1>Summarize this</h1>
-    <form method="POST">
-      <textarea name="text" cols="100" rows="20"></textarea>
-      <br/>
-      Use:
-      <select name="language">
-        <option value="german">German</option>
-        <option value="english">English</option>
-      </select>
-      In:
-      <input type="number" name="sentences" size="2" value="3" min="1">
-      sentences.
-      <input type="submit" name="submit" value="Summarize">
-    </form>
+  <body style="background: #efefef">
+    <nav class="ui top fixed inverted menu">
+      <a class="active violet item" href="/">Summarize this</a>
+    </nav>
 
-    <footer>
-      <a href="https://github.com/thekid/summarize">Made with 💘 with pysummary</a>
+    <main style="padding: 50px 10px 0 10px; background: white; box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2)">
+      <div class="ui vertical segment">
+        <form class="ui form" method="POST">
+          <div class="field">
+            <label>Text to summarize</label>
+            <textarea name="text" rows="16"></textarea>
+          </div>
+          <div class="fields" style="display: grid; grid-template-columns: 20ch 10ch auto">
+            <div class="field">
+              <label for="language">Language</label>
+              <select name="language">
+                <option value="german">German</option>
+                <option value="english">English</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sentences">Sentences</label>
+              <input type="number" name="sentences" size="2" value="3" min="1">
+            </div>
+            <div class="field" style="text-align: right">
+              <label>&#160;</label>
+              <input class="ui violet button" type="submit" name="submit" value="Summarize">
+            </div>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <footer style="margin-top: 1em; text-align: center">
+      <p><a href="https://github.com/thekid/summarize">Made with 💘 with pysummary</a></p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
   </body>
 </html>
