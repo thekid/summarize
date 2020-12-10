@@ -25,9 +25,12 @@ class Summarize(BaseHTTPRequestHandler):
     form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
     text = form.getvalue('text')
     sentences = form.getvalue('sentences')
-    result = summarize(text, sentence_count=int(sentences), language=form.getvalue('language'))
 
-    self.output('result', {'text': text, 'result': result, 'sentences': sentences})
+    if text is None:
+      self.output('result', {'text': '', 'result': '', 'sentences': sentences})
+    else:
+      result = summarize(text, sentence_count=int(sentences), language=form.getvalue('language'))
+      self.output('result', {'text': text, 'result': result, 'sentences': sentences})
 
 if __name__ == '__main__':
   handler = Summarize
