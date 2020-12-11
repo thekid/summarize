@@ -10,7 +10,7 @@ USER app
 
 WORKDIR /home/app
 
-RUN pip3 install pysummarize
+RUN pip3 install pysummarize pysummarization
 
 RUN python3 -c 'import nltk; nltk.download(["stopwords", "punkt"])'
 

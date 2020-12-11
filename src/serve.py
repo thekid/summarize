@@ -4,6 +4,9 @@ import re
 import html
 import sys
 
+from pysummarization.nlpbase.auto_abstractor import AutoAbstractor
+from pysummarization.tokenizabledoc.simple_tokenizer import SimpleTokenizer
+from pysummarization.abstractabledoc.top_n_rank_abstractor import TopNRankAbstractor
 from summarize import summarize
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -24,13 +27,26 @@ class Summarize(BaseHTTPRequestHandler):
   def do_POST(self):
     form = cgi.FieldStorage(fp=self.rfile, headers=self.headers, environ={'REQUEST_METHOD': 'POST'})
     text = form.getvalue('text')
-    sentences = form.getvalue('sentences')
+    sentences = int(form.getvalue('sentences'))
 
     if text is None:
       self.output('result', {'text': '', 'result': '', 'sentences': sentences})
     else:
-      result = summarize(text, sentence_count=int(sentences), language=form.getvalue('language'))
-      self.output('result', {'text': text, 'result': result, 'sentences': sentences})
+      graph_result = summarize(text, sentence_count=sentences, language=form.getvalue('language'))
+
+      auto_abstractor = AutoAbstractor()
+      auto_abstractor.tokenizable_doc = SimpleTokenizer()
+      auto_abstractor.delimiter_list = ['.', "\n"]
+      rank = TopNRankAbstractor()
+      rank.top_n = sentences
+      result_dict = auto_abstractor.summarize(text, rank)
+
+      self.output('result', {
+        'text'        : text,
+        'result.graph': graph_result,
+        'result.ai'   : ''.join(result_dict['summarize_result']),
+        'sentences'   : sentences
+      })
 
 if __name__ == '__main__':
   handler = Summarize
