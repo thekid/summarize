@@ -37,14 +37,12 @@ class Summarize(BaseHTTPRequestHandler):
       auto_abstractor = AutoAbstractor()
       auto_abstractor.tokenizable_doc = SimpleTokenizer()
       auto_abstractor.delimiter_list = ['.', "\n"]
-      rank = TopNRankAbstractor()
-      rank.top_n = sentences
-      result_dict = auto_abstractor.summarize(text, rank)
+      result_dict = auto_abstractor.summarize(text, TopNRankAbstractor())
 
       self.output('result', {
         'text'        : text,
         'result.graph': graph_result,
-        'result.ai'   : ''.join(result_dict['summarize_result']),
+        'result.ai'   : ''.join(result_dict['summarize_result'][:sentences]),
         'sentences'   : sentences
       })
 
